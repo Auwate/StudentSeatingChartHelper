@@ -1,4 +1,6 @@
-package com.austinuwate;
+package com.austinuwate.PersonClasses;
+
+import com.austinuwate.PersonClasses.Person;
 
 /**
  * This class will be the most common class used, as a classroom predominantly has Students,

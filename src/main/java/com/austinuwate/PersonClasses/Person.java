@@ -1,4 +1,4 @@
-package com.austinuwate;
+package com.austinuwate.PersonClasses;
 
 /**
  * This class tries to implement the Interface Segregation Principle and Dependency Inversion

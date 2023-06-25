@@ -1,4 +1,6 @@
-package com.austinuwate;
+package com.austinuwate.PersonClasses;
+
+import com.austinuwate.PersonClasses.Person;
 
 /**
  * This class reflects the real life occurrence of people auditing a class. They are not Students,
