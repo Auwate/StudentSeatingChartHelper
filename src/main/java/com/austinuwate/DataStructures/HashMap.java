@@ -1,7 +1,5 @@
 package com.austinuwate.DataStructures;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 /**
  * This class implements a HashMap to store and access Person objects.
  */
@@ -10,25 +8,17 @@ public class HashMap {
     /**
      * This will hold objects of Persons, just implemented as Objects.
      */
-    private LinkedNode[] personArray;
+    private final LinkedNode[] personArray;
     private final double SEED;
-    private final int capacity;
-    static int size = 0;
-    static int RESIZE_FACTOR = 2;
+    private final int capacity; // -> Will be used in future resize method
+    static int size = 0; // -> Will be used in future resize method
+    static int RESIZE_FACTOR = 2; // -> Will be used in future resize method
 
     public HashMap () {
 
         this.SEED = 1+Math.random();
         this.personArray = new LinkedNode[100];
         this.capacity = 100;
-
-    }
-
-    public HashMap (int capacity, double SEED) {
-
-        this.SEED = SEED;
-        this.personArray = new LinkedNode[capacity];
-        this.capacity = capacity;
 
     }
 
@@ -42,7 +32,7 @@ public class HashMap {
      */
     public void put (String SSN, Object object) {
 
-        int location = (int)(( SEED * Integer.parseInt(SSN) ) % capacity);
+        int location = ( (int)(( SEED * Integer.parseInt(SSN) )) % 100);
 
         if (this.personArray[location] == null) {
             this.personArray[location] = new LinkedNode(object, SSN);
@@ -50,7 +40,12 @@ public class HashMap {
         else {
             this.personArray[location].add(object, SSN);
         }
-        size++;
+
+        /* if (size++ > capacity) {
+
+            resize();
+
+        } */
 
     }
 
@@ -61,7 +56,11 @@ public class HashMap {
      */
     public Object get (String SSN) {
 
-        int location = (int)(( SEED * Integer.parseInt(SSN) ) % capacity);
+        if (SSN == null) {
+            return null;
+        }
+
+        int location = ( (int)(( SEED * Integer.parseInt(SSN) )) % 100);
 
         if ( personArray[ location ] != null ) {
             return personArray[ location ].get(SSN);
@@ -72,22 +71,22 @@ public class HashMap {
     }
 
     /**
-     * After the table reaches full capacity, it will double in size
+     * After the table reaches full capacity, it will double in size. However, due to
+     * time constraints, this will be implemented later.
      */
-    private void resize () {
+    /* private void resize () {
 
-        HashMap copy = new HashMap(this.capacity * RESIZE_FACTOR, this.SEED );
-        LinkedNode[] tempTable = new LinkedNode[size * 2];
+        LinkedNode[] tempTable = new LinkedNode[size * RESIZE_FACTOR];
 
         for (int i = 0; i < size; i++) {
 
-            tempTable[i] = copy.personArray[i];
+            tempTable[i] = this.personArray[i];
 
         }
 
         this.personArray = tempTable;
 
-    }
+    } */
 
     class LinkedNode {
 
@@ -102,9 +101,38 @@ public class HashMap {
         public LinkedNode(Object person, String SSN) {
 
             this.head = new Node (person, SSN);
-            this.head = null;
 
         }
+
+        /**
+         * Returns a 2d array of Objects, with each row being the next bucket
+         *
+         * @param list -> Current table of buckets holding objects
+         * @return ObjectArrayForResizing -> A 2D array of Objects
+         */
+        /* public Object[][] getObjectListFromMap (LinkedNode[] list) {
+
+            Object[][] ObjectArrayForResizing = new Object[list.length][list.length];
+            Node node;
+            int j;
+
+            for (int i = 0; i < list.length; i++) {
+
+                node = list[i].head;
+                j = 0;
+
+                while (node.next != null) {
+
+                    ObjectArrayForResizing[i][j++] = node.person;
+                    node = node.next;
+
+                }
+
+            }
+
+            return ObjectArrayForResizing;
+
+        } */
 
         /**
          * Inserts a new Node at the end of the LinkedNode
@@ -135,6 +163,11 @@ public class HashMap {
 
         }
 
+        /**
+         * This finds a Person object, given an SSN key
+         * @param SSN -> Key
+         * @return node.person -> This is a Student or Auditor, wrapped in an Object.
+         */
         public Object get (String SSN) {
 
             if (head == null) {

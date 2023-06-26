@@ -51,7 +51,7 @@ public interface SeatingHelper {
      * Read method is data type specific (for method of finding)
      * to appropriately maximize CRUD operation efficiency
      *
-     * @param object
+     * @param object -> Gets the value based on the object
      */
     public void get (Object object);
 
