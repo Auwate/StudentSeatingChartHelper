@@ -1,6 +1,7 @@
 package com.austinuwate.SeatingHelperClasses;
 
 import com.austinuwate.DataStructures.HashMap;
+import com.austinuwate.PersonClasses.Person;
 
 /**
  * Methods with documentation are class specific
@@ -8,7 +9,10 @@ import com.austinuwate.DataStructures.HashMap;
  */
 public class SeatingHelperHashMap implements SeatingHelper {
 
-    private HashMap table;
+    /*
+    This implementation will use the HashMap to store and retrieve data
+     */
+    private final HashMap table;
 
     public SeatingHelperHashMap() {
 
@@ -17,12 +21,15 @@ public class SeatingHelperHashMap implements SeatingHelper {
     }
 
     @Override
-    public void quickTest() {
+    public void add(String key, Object object) {
 
-    }
+        if (! (object instanceof Person) ) {
 
-    @Override
-    public void add(Object object) {
+            return;
+
+        }
+
+        this.table.put(key, object);
 
     }
 

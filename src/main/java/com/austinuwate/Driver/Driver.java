@@ -15,17 +15,18 @@ public class Driver {
         new SeatingHelperHashMap();
 
         /*
-            Done:
-                PersonClasses Package
-                DataStructures Package
-
-                TestHashMap Class
+            7/3/2023
+            DONE:
+                Map Interface
+                    - Necessary for decoupling between packages
+                    - Added modify & remove methods
 
             To-Do:
                 SeatingHelperHashMap
                     - Acts as the interface between the HashMap and the User
                     - Will have more front-end design
                     - User friendly
+                    - Uses the Map interface
 
          */
 

@@ -1,24 +1,26 @@
 package com.austinuwate.DataStructures;
 
+import com.austinuwate.PersonClasses.Person;
+
 /**
  * This class implements a HashMap to store and access Person objects.
  */
-public class HashMap {
+public class HashMap implements Map {
 
     /**
      * This will hold objects of Persons, just implemented as Objects.
      */
     private final LinkedNode[] personArray;
     private final double SEED;
-    private final int capacity; // -> Will be used in future resize method
-    static int size = 0; // -> Will be used in future resize method
-    static int RESIZE_FACTOR = 2; // -> Will be used in future resize method
+    //private final int capacity; // -> Will be used in future resize method
+    //static int size = 0; // -> Will be used in future resize method
+    //static int RESIZE_FACTOR = 2; // -> Will be used in future resize method
 
     public HashMap () {
 
         this.SEED = 1+Math.random();
         this.personArray = new LinkedNode[100];
-        this.capacity = 100;
+        //this.capacity = 100;
 
     }
 
@@ -30,15 +32,19 @@ public class HashMap {
      * @param SSN -> Uses the SSN of the person to hash the object into the table
      * @param object -> Actual piece of data
      */
-    public void put (String SSN, Object object) {
+    public boolean put (Object SSN, Object object) {
 
-        int location = ( (int)(( SEED * Integer.parseInt(SSN) )) % 100);
+        if ( !(SSN instanceof String) || !(object instanceof Person) ) {
+            return false;
+        }
+
+        int location = ( (int)(( SEED * Integer.parseInt((String)SSN) )) % 100);
 
         if (this.personArray[location] == null) {
-            this.personArray[location] = new LinkedNode(object, SSN);
+            this.personArray[location] = new LinkedNode(object, (String)SSN);
         }
         else {
-            this.personArray[location].add(object, SSN);
+            this.personArray[location].add(object, (String)SSN);
         }
 
         /* if (size++ > capacity) {
@@ -47,26 +53,89 @@ public class HashMap {
 
         } */
 
+        return true;
+
     }
 
     /**
      * Returns the Person object given an SSN
-     * @param SSN -> The individuals SSN
-     * @return -> Person object
+     * @param key -> The individuals SSN / The key we will find data with
+     * @return Object -> Person object
+     *
+     * If the SSN is not a String, return the SSN object.
+     * If the hashmap cannot find the data, return a null
      */
-    public Object get (String SSN) {
+    public Object get (Object key) {
 
-        if (SSN == null) {
-            return null;
+        /*
+        If the SSN is not a String, return the SSN. The method caller will check to see if
+        the returned value is equal to the SSN.
+         */
+        if ( !(key instanceof String) ) {
+            return key;
         }
 
-        int location = ( (int)(( SEED * Integer.parseInt(SSN) )) % 100);
+        int location = ( (int)(( SEED * Integer.parseInt((String)key) )) % 100);
 
         if ( personArray[ location ] != null ) {
-            return personArray[ location ].get(SSN);
+            return personArray[ location ].get((String)key);
         }
 
         return null;
+
+    }
+
+    /**
+     * This method will remove a data, given a key
+     * @param key -> Used to find the data
+     * @return Object -> Instead of immediately deleting the data, the program will return
+     * a copy of what the data was.
+     *
+     * If the SSN is not a String, return the SSN object.
+     * If the hashmap cannot find the data, return a null
+     */
+    public Object remove (Object key) {
+
+        /*
+        If the SSN is not a String, return the SSN. The method caller will check to see if
+        the returned value is equal to the SSN.
+         */
+        if ( !(key instanceof String) ) {
+            return key;
+        }
+
+        int location = (int)(( SEED * Integer.parseInt((String)key) )) % 100;
+        Object temp = null;
+
+        if (personArray[ location ] != null) {
+
+            temp = personArray [ location ].get((String)key);
+            personArray[location].remove((String)key);
+
+        }
+
+        return temp;
+
+    }
+
+    /**
+     * This method will allow a user to modify
+     * @param key -> Used to find the data
+     * @param object -> The new data
+     * @return boolean -> Used to validate that the instructions were successful
+     */
+    public boolean modify (Object key, Object object) {
+
+        /*
+        This will tell the original method call that there was an issue
+         */
+        if ( !(key instanceof String) || !(object instanceof Person) ) {
+            return false;
+        }
+
+        int location = (int)(( SEED * Integer.parseInt((String)key) )) % 100;
+
+        return personArray[location] != null && personArray[location].modify(object, (String) key);
 
     }
 
@@ -104,7 +173,7 @@ public class HashMap {
 
         }
 
-        /**
+        /*
          * Returns a 2d array of Objects, with each row being the next bucket
          *
          * @param list -> Current table of buckets holding objects
@@ -133,6 +202,40 @@ public class HashMap {
             return ObjectArrayForResizing;
 
         } */
+
+        /**
+         * This method will take two parameters, person and SSN and modify a Node to the
+         * current data
+         * @param person -> The new data that will replace the old
+         * @param SSN -> The key to find the data
+         */
+        public boolean modify (Object person, String SSN) {
+
+            if (head == null) {
+
+                return false;
+
+            }
+
+            Node node = head;
+
+            while (node.next != null) {
+
+                if (node.SSN.equals(SSN)) {
+
+                    node.person = person;
+                    node.SSN = SSN;
+                    return true;
+
+                }
+
+                node = node.next;
+
+            }
+
+            return false;
+
+        }
 
         /**
          * Inserts a new Node at the end of the LinkedNode
