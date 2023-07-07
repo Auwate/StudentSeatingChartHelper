@@ -15,25 +15,26 @@ public interface SeatingHelper {
      * Remove method is data type specific (for method of removal)
      * to appropriately maximize CRUD operation efficiency
      *
-     * @param object -> Allows for any variable to be passed in anticipation of future data
+     * @param key -> Allows the method to find any element in the hashtable
      */
-    void remove (Object object);
+    Object remove (Object key);
 
     /**
      * Update method is data type specific (for method of finding/modifying)
      * to appropriately maximize CRUD operation efficiency
      *
-     * @param object -> Allows for any variable to be passed in anticipation of future data
+     * @param key -> Allows the HashMap to find any element
+     * @param object -> New data
      */
-    void update (Object object);
+    void modify (Object key, Object object);
 
 
     /**
      * Read method is data type specific (for method of finding)
      * to appropriately maximize CRUD operation efficiency
      *
-     * @param object -> Gets the value based on the object
+     * @param key -> Gets the value based on the key
      */
-    void get (Object object);
+    Object get (Object key);
 
 }

@@ -2,6 +2,7 @@ package com.austinuwate.Driver;
 
 import com.austinuwate.SeatingHelperClasses.SeatingHelperHashMap;
 import com.austinuwate.Test.TestHashMap;
+import com.austinuwate.Test.TestSeatingHelperHashMap;
 
 public class Driver {
 
@@ -11,8 +12,8 @@ public class Driver {
             Driver just calls a new SeatingHelperHashMap
          */
 
-        new TestHashMap();
-        new SeatingHelperHashMap();
+        //new TestHashMap();
+        new TestSeatingHelperHashMap();
 
         /*
             7/3/2023

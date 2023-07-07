@@ -72,7 +72,7 @@ public class HashMap implements Map {
         the returned value is equal to the SSN.
          */
         if ( !(key instanceof String) ) {
-            return key;
+            return null;
         }
 
         int location = ( (int)(( SEED * Integer.parseInt((String)key) )) % 100);
@@ -101,7 +101,7 @@ public class HashMap implements Map {
         the returned value is equal to the SSN.
          */
         if ( !(key instanceof String) ) {
-            return key;
+            return null;
         }
 
         int location = (int)(( SEED * Integer.parseInt((String)key) )) % 100;

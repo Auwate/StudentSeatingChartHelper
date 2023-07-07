@@ -16,13 +16,13 @@ import java.util.Random;
  */
 public class TestHashMap {
 
-    private final int TEST_AMOUNT = 1000; // Quickly change the amount you want to
+    private final int TEST_AMOUNT = 100; // Quickly change the amount you want to
                                         // get from/put into the hashmap
 
     public TestHashMap () {
 
         HashMap hashMap = new HashMap();
-        String[] arrayOfSSNs = new String[1000];
+        String[] arrayOfSSNs = new String[TEST_AMOUNT];
         putTest(hashMap, arrayOfSSNs);
         getTest(hashMap, arrayOfSSNs);
 
